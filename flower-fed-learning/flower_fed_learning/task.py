@@ -32,26 +32,17 @@ def load_model():
     model.add(Dense(9, activation='relu', input_shape=(INPUT_DIM,)))
 
     # Hidden layers
-    model.add(Dense(32, activation='relu'))
-    model.add(Dense(64, activation='relu'))
     model.add(Dense(128, activation='relu'))
-    model.add(Dense(256, activation='relu'))
-    model.add(Dense(128, activation='relu'))
-    model.add(Dense(64, activation='relu'))
-    model.add(Dense(32, activation='relu'))
-
-    # Output layer (no activation for regression)
-    model.add(Dense(1, activation='linear'))
+    model.add(Dense(1, activation='relu'))
 
     # Compile model with MSE loss for regression
-    model.compile(optimizer='RMSprop', loss='mean_squared_error', metrics=['mae'])
+    model.compile(optimizer='Adam', loss='mean_squared_error', metrics=['mae'])
 
     return model
 
 def data_prep(data) -> ndarray:
     # Transform the dataset into a DataFrame
     data_df = pd.DataFrame(data)
-
     # Compute the FinancialStatus
     data_df['FinancialStatus'] = data_df['FinancialEducation'] * np.log(data_df['Wealth'])
 
@@ -93,7 +84,5 @@ def load_data(partition_id, num_partitions):
 
     x_test = data_prep(partition["test"])
     y_test = np.asarray(partition["test"]["RiskPropensity"])
-
-    #print(f"x_train: {x_train},\n y_train: {y_train},\n x_test: {x_test},\n y_test: {y_test}\n")
 
     return x_train, y_train, x_test, y_test

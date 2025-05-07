@@ -34,3 +34,5 @@ default = "local-simulation"
 
 [tool.flwr.federations.local-simulation]
 options.num-supernodes = 10
+options.backend.client-resources.num-cpus = 1   # each ClientApp assumes to use 1 CPU
+options.backend.client-resources.num-gpus = 0.0 # no GPU access to the ClientApp
