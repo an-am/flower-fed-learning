@@ -60,7 +60,8 @@ def data_prep(data) -> ndarray:
     x = x.to_numpy()
 
     # Scale the data
-    x_scaled = (x - x.mean()) / x.std()
+    scaler = StandardScaler()
+    x_scaled =  scaler.fit_transform(x)
 
     return x_scaled
 
