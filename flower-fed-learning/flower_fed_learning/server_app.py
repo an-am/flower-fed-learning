@@ -6,6 +6,10 @@ from flwr.server.strategy import FedAvg
 
 from flower_fed_learning.task import load_model
 
+def fit_config(server_round: int):
+    """Send the current round to every client."""
+    return {"server_round": server_round}
+
 
 def server_fn(context: Context):
     # Read from config
@@ -15,11 +19,12 @@ def server_fn(context: Context):
     parameters = ndarrays_to_parameters(load_model().get_weights())
 
     # Define strategy
-    strategy = strategy = FedAvg(
+    strategy = FedAvg(
         fraction_fit=1.0,
         fraction_evaluate=1.0,
         min_available_clients=2,
         initial_parameters=parameters,
+        on_fit_config_fn=fit_config
     )
     config = ServerConfig(num_rounds=num_rounds)
 

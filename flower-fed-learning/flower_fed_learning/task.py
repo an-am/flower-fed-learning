@@ -36,7 +36,7 @@ def load_model():
     model.add(Dense(1, activation='relu'))
 
     # Compile model with MSE loss for regression
-    model.compile(optimizer='Adam', loss='mean_squared_error', metrics=['mae'])
+    model.compile(optimizer='RMSProp', loss='mean_squared_error', metrics=['mse'])
 
     return model
 
